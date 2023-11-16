@@ -58,7 +58,7 @@ jobs:
     - name: Slack Notification
       uses: slackapi/slack-github-action@v1.16.0
       with:
-        text: ${{ steps.read_file.outputs.content }}
+        payload: "{\"text\":\"${{ steps.read_file.outputs.content }}\"}"
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
