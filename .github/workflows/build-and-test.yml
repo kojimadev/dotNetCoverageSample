@@ -53,7 +53,11 @@ jobs:
 
     - name: Read coverage-results.md
       id: read_file
-      run: echo "::set-output name=content::$(cat code-coverage-results.md)"
+      run: |
+        content=$(cat code-coverage-results.md)
+        content_arr=($content) # 改行区切りの配列に変換
+        content_formatted=$(IFS=$'\n'; echo "${content_arr[*]}") # 配列を改行で結合
+        echo "::set-output name=content::$content_formatted"
 
     - name: Slack Notification
       uses: slackapi/slack-github-action@v1.16.0
