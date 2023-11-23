@@ -54,8 +54,8 @@ jobs:
     - name: Read coverage-results.md
       id: read-coverage-results
       run: |
-        $content=$(cat code-coverage-results.md)
-        Write-Output "result=$content" >> $Env:GITHUB_OUTPUT
+        content=$(cat code-coverage-results.md)
+        echo "result=$content" >> $GITHUB_OUTPUT
       
     - name: Slack Notification
       uses: slackapi/slack-github-action@v1.16.0
