@@ -59,7 +59,7 @@ jobs:
     - name: Slack Notification
       uses: slackapi/slack-github-action@v1.16.0
       with:
-        text: ${{ env.SLACK_MESSAGE }}
+        payload: "{\"text\":\"${{ env.SLACK_MESSAGE }}\"}"
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         SLACK_MESSAGE: $(cat coverage_content.txt) # 保存したファイルから内容を読み取る
