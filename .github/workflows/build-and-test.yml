@@ -52,9 +52,10 @@ jobs:
         thresholds: '40 100'
 
     - name: Read coverage-results.md
+      id: read-coverage-results
       run: |
-        content=$(cat code-coverage-results.md)
-        echo "$content" >> coverage_content.txt # ファイルに内容を保存
+        $content=$(cat code-coverage-results.md)
+        Write-Output "result=$content" >> $Env:GITHUB_OUTPUT
       
     - name: Slack Notification
       uses: slackapi/slack-github-action@v1.16.0
@@ -62,7 +63,7 @@ jobs:
         payload: "{\"text\":\"${{ env.SLACK_MESSAGE }}\"}"
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        SLACK_MESSAGE: $(cat coverage_content.txt) # 保存したファイルから内容を読み取る
+        SLACK_MESSAGE: ${{ steps.read-coverage-results.outputs.result }}
 
     - name: Add Coverage PR Comment
       uses: marocchino/sticky-pull-request-comment@v2
