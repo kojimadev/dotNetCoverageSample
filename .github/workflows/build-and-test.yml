@@ -35,12 +35,11 @@ jobs:
       run: dotnet test ${{env.SOURCE_FOLDER}} --collect:"XPlat Code Coverage";
 
     - name: Report Generator
-      uses: danielpalme/ReportGenerator-GitHub-Action@4.8.12
+      uses: danielpalme/ReportGenerator-GitHub-Action@5.2.0
       with:
         reports: '**/coverage.cobertura.xml'
         targetdir: 'coveragereport'
         reporttypes: 'HtmlInline_AzurePipelines;Cobertura'
-        assemblyfilters: '-xunit*'
 
     - name: Publish Code Coverage
       id: publish
@@ -52,14 +51,7 @@ jobs:
     - name: Slack Notification
       uses: slackapi/slack-github-action@v1.16.0
       with:
-        payload: "{\"text\":\"${{ env.SLACK_MESSAGE }}\"}"
+        payload: "{\"text\":\"sample message\"}"
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         SLACK_MESSAGE: ${{ steps.publish.outputs.artifact_url }}
-
-    - name: Add Coverage PR Comment
-      uses: marocchino/sticky-pull-request-comment@v2
-      if: github.event_name == 'pull_request'
-      with:
-        recreate: true
-        path: coveragereport
