@@ -32,7 +32,7 @@ jobs:
       
     - name: Test
       id: test
-      run: dotnet test ${{env.SOURCE_FOLDER}} --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=./TestResults/Coverage/
+      run: dotnet test ${{env.SOURCE_FOLDER}} --collect:"XPlat Code Coverage";
 
     - name: Report Generator
       uses: danielpalme/ReportGenerator-GitHub-Action@4.8.12
