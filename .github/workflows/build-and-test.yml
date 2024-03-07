@@ -47,6 +47,7 @@ jobs:
       with:
         name: code-coverage-report
         path: coveragereport/index.html
+        compression-level: 0 # no compression
       
     - name: Slack Notification
       uses: slackapi/slack-github-action@v1.16.0
